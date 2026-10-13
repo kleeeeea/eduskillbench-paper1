@@ -1,0 +1,19 @@
+\subsection{The Cost of Procedural Support}
+\label{sec:cost}
+
+Following stage-level accounting in EduIllustrate \citep{eduillustrate}, we
+sum model-call usage within each task before comparing costs. On three fixed
+tasks with retained native traces, GLM Flash's mean calls increase from
+1.00 to 2.00 with Skill access, input tokens from 5,758 to 14,998, and
+estimated cost from CNY 0.01283 to 0.02062: 2.60$\times$ the input and
+1.61$\times$ the cost. DeepSeek Flash's With executions average 4.33 calls
+and 41,776 input tokens. These examples expose repeated-context overhead
+behind the access decisions, without estimating the full-inventory mean.
+
+A separate direct-API pilot makes 12 requests, four models on the same
+three tasks, at a 4,096-token cap. Its public-tariff estimate totals CNY
+0.6430; seven responses stop naturally and five reach the cap. Accordingly,
+this measures bounded request cost, not cost per correct teaching artifact.
+The pilot omits the native harness, and its provider configuration is scoped
+separately. Appendix~\ref{app:cost} gives model versions, per-model results,
+cached-token accounting, and dated rates \citep{arkpricing}.

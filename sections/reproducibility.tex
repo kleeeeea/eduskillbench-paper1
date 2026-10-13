@@ -1,0 +1,112 @@
+\section{Reproducibility and Version Boundaries}
+\label{app:execution}
+
+\subsection{Generation Configuration}
+
+All current result rows use the frozen 305-task objects in the same order and
+the reference-relative protocol of Section~\ref{sec:judge}. The four native
+model groups share the image with SHA-256 prefix
+\texttt{1f72e58f6d9b5176} (full digest in the release manifest),
+OpenCode 1.18.11, and the education-single-turn agent prompt. Each condition
+retains a per-task workspace and logs. Native With exposes the designated
+candidate package, not all 14 packages. No rubric or evaluation reference is
+given to generation. The package mount and any available supporting files are
+part of the release manifest.
+
+The provider aliases are \texttt{glm-5-3-flash-260828},
+\texttt{deepseek-v4.1-flash}, \texttt{deepseek-v4-pro-ga-260813}, and
+\texttt{doubao-seed-2-1-pro-260915}. GLM Flash, Pro, and Doubao use the Ark
+\texttt{/api/v3} protocol; DeepSeek Flash uses a third-party OpenAI-compatible
+\texttt{/v1} endpoint. GLM Flash enables low-effort thinking, whereas the other
+three disable it. These recorded switches are not claims about hidden provider
+computation. Environment concurrency is 8 for GLM Flash and DeepSeek Flash and
+32 for Pro and Doubao; the API concurrency ceiling is 64. Scheduling
+concurrency is not repeated sampling or a per-task roll-out count.
+
+The retained GLM-5.3 row has 262 With answers from full-text Skill exposure
+with native resources and 43 from native candidate-package exposure. It is a
+historical composite result under the current task inventory and score metric,
+not a fifth matched native-exposure intervention. It is retained for result
+coverage but excluded from native-access statistics. The task-level exposure
+manifest is necessary to reproduce this row; an aggregate score cannot identify
+the effect of a single exposure method.
+
+\subsection{Judge Inputs and Aggregation}
+
+The accepted judge uses \texttt{deepseek-v4.1-flash}, thinking disabled,
+6,000 maximum output tokens, and a final recovery timeout of 600 seconds.
+The fixed reference answer text is the archived Pro No Skill answer for each
+task, not a human gold answer. Candidate and reference are anonymized jointly;
+the rubric scope, segmentation, A/B ordering, and hashes are retained.
+High-scoring evidence citations refer to the appropriate response's own
+segments. Score validation checks structure and bindings, not the truth of the
+quoted claims. Each accepted pair retains candidate and reference dimension
+scores, evidence, and the derived ratio.
+
+The primary calculation is identical for all 305 tasks: equally average
+applicable 0--10 dimensions within each response, compute its per-task
+candidate/reference ratio, and average those ratios over the full inventory.
+An execution failure contributes zero; a reference-self cell contributes 0.5.
+Missing or invalid verdicts must remain unresolved, not be assigned convenient
+defaults. None remain in the five-model archive. Transport retries and rejected
+schema responses may precede an accepted verdict, so one retained verdict does
+not imply exactly one historical HTTP request.
+
+\subsection{Historical Rubric Metadata}
+
+The source inventory contains 60 tasks with three native grades, 100 with four,
+20 with two grades plus a below-minimum fallback, and 83 with satisfaction
+labels where native grades are absent. The remaining 42 constructed tasks have
+weighted binary items. This provenance is retained, but the current 305-task
+metric does not count top grades on one subset and all-pass outcomes on another.
+The current human-adjudicated comparison in Appendix~\ref{app:human} uses
+the same continuous dimensions and paired answers as the deployed Ref judge,
+not those earlier aggregation formulas. A pointwise score and a normalized
+relative score are on different scales; their numerical difference does not
+measure a quality change or a correction of inflation.
+
+\subsection{Small-Model Provenance}
+
+Training seeds use the EduBench snapshot at commit
+\texttt{f19004a5c68c27cd9d35\allowbreak 4401654345072fb712c6}. This is a training-seed
+source, not a claim that every evaluation task is an official EduBench item.
+The 246-example release contains 80 Skill--seed combinations from 70 upstream
+seeds. Variant counts are 62 complete-product tasks, 65 changed-evidence tasks,
+61 resource-constraint tasks, and 58 artifact-repair tasks. The recorded
+\texttt{environment\_trace\_verified} flag is false for all 246 examples;
+the retained targets are complete final answers, not verified full trajectories.
+
+The SFT base is Qwen3-4B-Instruct-2507. Its one-epoch LoRA run uses bf16 and
+completion-only labels, rank 32, alpha 64, dropout 0.05, learning rate $10^{-5}$,
+and cosine scheduling with 5\% warmup. Adapters update attention $q/k/v/o$
+and MLP gate/up/down projections. Micro-batch 8 with accumulation 2 gives an
+effective batch of 16; training completes 16 optimizer steps.
+The longest retained training sequence has 7,723 tokens,
+within the 8,192-token limit; the mean assistant target has 1,091.81 tokens.
+The run takes approximately 239 seconds. GRPO completes 123 optimizer steps
+at learning rate $2\times10^{-6}$, using eight samples per question and
+generation batch 16, with a 4,096-token output limit, temperature 0.7,
+top-$p$ 0.9, cosine scheduling, 5\% warmup, and a DAPO-style loss. Its frozen
+KL policy is the SFT adapter with coefficient 0.04; empty and truncated outputs
+receive zero reward. Its run takes approximately 3,536 seconds.
+The training outcome judge is \texttt{deepseek-v4-flash-ga-260731}; the
+evaluation judge is V4.1 Flash. These are different model versions and reward
+scales, as specified in Section~\ref{sec:internalization}.
+
+The current review draft's small-model table is bound to the supplied recovery
+summary, while the latest item-level recovery archive is pending local
+reconciliation. That table should not be finalized for submission until the
+answer hashes, accepted verdicts, failure states, and paired differences are
+checked. The five API-system tables and native-access tables have already been
+recomputed from their retained item-level materials.
+
+\subsection{Release Contents}
+
+The retained experiment archive includes task/source/Skill IDs, exposure modes,
+model request aliases, generation and judging settings, accepted responses,
+failure states, rubric scopes, joint judgments, access evidence tiers, and
+offline aggregation scripts. The manuscript bundle contains compact frozen
+tables, case exports, and provenance manifests. These materials separate original pointwise experiments from
+current reference-relative experiments. Credentials, personal server routes,
+and unrelated projects are excluded. Availability of a record is not silently
+promoted to evidence of successful file delivery or scientific correctness.

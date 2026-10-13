@@ -1,0 +1,206 @@
+\section{Coverage and Access Diagnostics}
+\label{app:inventory}
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{lrr}
+\toprule
+Skill family & Test tasks & SFT examples\\
+\midrule
+\inputtable{tables/inventory.tex}
+\bottomrule
+\end{tabular}
+\caption{Unified benchmark and training inventory. Family coverage is complete
+but sizes and task distributions are not balanced or proportional. Counts do
+not establish coverage of every principal operation within a Skill.}
+\label{tab:family-inventory}
+\end{table}
+
+The five families with three benchmark tasks only are emergent projects,
+motivation diagnosis, emotional literacy, self-explanation, and spaced
+practice. Lesson building contributes 154 source scenarios and three
+constructed tasks. The underlying task objects and order are unchanged between
+the frozen export and the present scoring archive, despite JSON formatting
+differences in their file hashes.
+
+\begin{table*}[t]
+\centering\small
+\begin{tabular}{lrrrr}
+\toprule
+Skill family & GLM Flash & DS V4.1 Flash & DS V4 Pro & Doubao 2.1 Pro\\
+\midrule
+\inputtable{tables/skill_routes.tex}
+\bottomrule
+\end{tabular}
+\caption{Completed expected-package loads / available tasks. Unknown captures
+are retained in the available-task denominator. Absence of a competing
+educational package means these counts measure access, not full-library
+retrieval accuracy.}
+\label{tab:family-access}
+\end{table*}
+
+\subsection{Complete Model--Skill Score Breakdown}
+
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Skill family & $n_s$ & GLM-5.3 & GLM Flash & DS Flash & DS Pro & Doubao\\
+\midrule
+\inputtable{tables/skill14_delta_all.tex}
+\bottomrule
+\end{tabular}
+\caption{With--No score differences across all 14 Skills. Every family
+retains its full task denominator, including execution failures. These are
+the numerical values behind Figure~\ref{fig:skill-breakdown}; additional
+decimals expose rounding, not statistical certainty.}
+\label{tab:family-main}
+\end{table*}
+
+Tables~\ref{tab:skill14-detail-a} and~\ref{tab:skill14-detail-b} retain the
+No/With means behind every difference in Table~\ref{tab:family-main}.
+Each mean uses all $n_s$ tasks in that family, including zero-valued execution
+failures. The same fixed task membership is used for all five models.
+Table~\ref{tab:skill14-failures} reports the corresponding execution failures;
+a completed answer that receives a low rubric score is not an execution
+failure. Per-task answer bindings, both judgment components, common-valid
+denominators, paired-direction counts, and weighted contributions to the
+305-task mean are retained in the offline analysis release.
+
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrrrrrrr}
+\toprule
+& & \multicolumn{3}{c}{GLM-5.3} & \multicolumn{3}{c}{GLM Flash} & \multicolumn{3}{c}{DS V4.1 Flash}\\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}\cmidrule(lr){9-11}
+Skill family & $n_s$ & No & With & $\Delta$ & No & With & $\Delta$ & No & With & $\Delta$\\
+\midrule
+\inputtable{tables/skill14_scores_a.tex}
+\bottomrule
+\end{tabular}
+\caption{Complete fourteen-Skill breakdown for the three result inventories
+shown: reference-relative No/With means on the 0--100 scale and differences
+in score points. Deltas are calculated from unrounded means. Scores are not
+scientific-accuracy percentages.}
+\label{tab:skill14-detail-a}
+\end{table*}
+
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrrr}
+\toprule
+& & \multicolumn{3}{c}{DS V4 Pro} & \multicolumn{3}{c}{Doubao Seed 2.1 Pro}\\
+\cmidrule(lr){3-5}\cmidrule(lr){6-8}
+Skill family & $n_s$ & No & With & $\Delta$ & No & With & $\Delta$\\
+\midrule
+\inputtable{tables/skill14_scores_b.tex}
+\bottomrule
+\end{tabular}
+\caption{Complete fourteen-Skill breakdown for Pro and Doubao, with the same
+denominators and scoring definition as Table~\ref{tab:skill14-detail-a}.
+Pro's No value is 50 in every family because it is the reference-self
+condition; it is not an independent judgment of Pro answer quality.}
+\label{tab:skill14-detail-b}
+\end{table*}
+
+\begin{table*}[t]
+\centering\small
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{lrrrrrr}
+\toprule
+Skill family & $n_s$ & GLM-5.3 & GLM Flash & DS Flash & DS Pro & Doubao\\
+\midrule
+\inputtable{tables/skill14_failures.tex}
+\bottomrule
+\end{tabular}
+\caption{Execution failures in No/With order for every model--Skill group.
+These counts expose completion-driven changes without removing failures
+from the reported scores. A zero count does not mean the answers are
+correct, or that the designated package was used.}
+\label{tab:skill14-failures}
+\end{table*}
+
+\subsection{Evidence Levels and Case Selection}
+
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrr}
+\toprule
+Model & Loaded & Rate (\%) & $\Delta_L$ & $\Delta_N$\\
+\midrule
+\inputtable{tables/access_summary_v4.tex}
+\bottomrule
+\end{tabular}
+\caption{Designated-package loads among 305 With tasks. $\Delta_L$ and
+$\Delta_N$ are With--No changes on common-valid pairs with a load and with
+no recorded access. DeepSeek Flash and Doubao each have one unknown
+capture, retained in rate denominators.}
+\label{tab:routing}
+\label{tab:access-effects}
+\end{table}
+
+\begin{table}[t]
+\centering\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrr}
+\toprule
+& \multicolumn{2}{c}{Loaded} & \multicolumn{2}{c}{No recorded access}\\
+\cmidrule(lr){2-3}\cmidrule(lr){4-5}
+Model & $N$ & $\Delta$ & $N$ & $\Delta$\\
+\midrule
+\inputtable{tables/access_effects.tex}
+\bottomrule
+\end{tabular}
+\caption{Common-valid subgroup denominators and With--No score differences
+for Table~\ref{tab:routing}. Groups are selected by the agent's recorded
+access behavior; their differences do not identify a causal loading effect.}
+\label{tab:access-subgroups}
+\end{table}
+
+Raw-trace access requires a completed designated Skill call with returned
+content in the root answer's execution tree. Summary-level access requires a
+retained completed-call record with the designated name but permits less
+inspection of subsequent resource actions. The two unknown captures concern
+DeepSeek Flash's \texttt{lesson-builder\_\_cn01\_05} and Doubao's
+\texttt{lesson-builder\_\_03}. They are not counted as proven non-access.
+One No Skill GLM Flash trace loads a built-in OpenCode customization package;
+this is not an exposed educational Skill and is not counted as such.
+
+The process-analysis bundle includes 32 case exports with saved No/With
+answers, judgment components, and available tool evidence. Cases illustrate
+positive, negative, tied, and incomplete outcomes; they do not estimate a
+population error rate. The native records distinguish main-package loading
+from supporting-file reads. In DeepSeek Flash, the 60 read errors comprise 41
+pedagogy, 16 checkpoint, two quality-gate, and one course-passport reference
+failures. Their frequency is specific to this mounted resource inventory.
+
+\subsection{Candidate and Reference Component Changes}
+\label{app:components}
+
+\begin{table*}[t]
+\centering\small
+\begin{tabular}{llrrrr}
+\toprule
+Model & Access group & $N$ & $\Delta J_{\mathrm{cand}}$ & $\Delta J_{\mathrm{ref}}$ & $\Delta R$\\
+\midrule
+\inputtable{tables/score_components.tex}
+\bottomrule
+\end{tabular}
+\caption{With--No changes on common valid pairs grouped by With access.
+All three deltas are multiplied by 100; $\Delta R$ averages per-task ratios
+rather than applying the ratio to the two mean components. Pro's reference-self
+No condition has no judged component scores, shown as unavailable rather than
+imputed.}
+\label{tab:components}
+\end{table*}
+
+The same reference text may receive different component scores in separate
+candidate pairs. Positive ratio changes can therefore accompany decreases in
+the judged reference component. Retaining these quantities prevents
+normalization from being mistaken for an independent measurement of absolute
+improvement. Neither component analysis nor anonymous presentation proves
+immunity to position, length, self-family, or reference-quality biases.

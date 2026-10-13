@@ -1,0 +1,26 @@
+# Compilation products; figures/*.pdf and preview/main.pdf are intentional.
+/main.pdf
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+/.build/
+.DS_Store
+__pycache__/
+
+# Never commit local credentials or runtime state.
+.env
+.env.*
+private/
+secrets/
+*.key
+*.pem
+*.token

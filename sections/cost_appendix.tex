@@ -1,0 +1,102 @@
+\section{Cost Accounting Details}
+\label{app:cost}
+
+Following EduIllustrate's token-based generation accounting \citep{eduillustrate},
+we distinguish a bounded API microcost from a retained agent execution.
+Neither includes judging. Public online tariffs observed on 12 October 2026
+are used for estimates, not as evidence of the account's bill.
+
+\paragraph{Bounded API pilot.}
+We fix three inventory tasks before requesting outputs: photosynthesis
+diagnostic-question construction, an eight-week retrieval schedule, and a
+Chinese teaching-method consultation. Each reachable Ark model receives the
+same educational instruction and task, without tools or Skill text. Four
+requests run concurrently, with a 4,096-token output cap; GLM Flash uses low
+reasoning effort, and the other models have thinking disabled. No temperature
+override is supplied. This is not a rerun of native OpenCode conditions.
+GLM-5.3 returns a model/access error on this ordinary endpoint and is not
+replaced by a different model.
+
+\begin{table*}[t]
+\centering\small
+\begin{tabular}{lrrrrr}
+\toprule
+Model & Terminal/3 & Input tokens & Output tokens & Time (s) & Est. cost (CNY)\\
+\midrule
+\inputtable{tables/cost_micro.tex}
+\bottomrule
+\end{tabular}
+\caption{Direct-API pilot on three fixed tasks per model. Means include all
+requests, including capped outputs. Terminal indicates a nonempty natural
+stop, not verified correctness. Output includes reasoning; prices use the
+dated Ark tariffs.}
+\label{tab:cost-pilot-main}
+\end{table*}
+
+\begin{table*}[t]
+\centering\small
+\begin{tabular}{llrrrr}
+\toprule
+Model & Condition & Calls & Input tokens & Output tokens & Cost (CNY)\\
+\midrule
+\inputtable{tables/cost_agent.tex}
+\bottomrule
+\end{tabular}
+\caption{Three-task native execution supplement to
+Table~\ref{tab:cost-pilot-main}, reconstructed without new generation.
+All model-call usage in each retained execution is aggregated before taking
+the task mean. Output includes reasoning;
+input includes caches. DS third-party prices are unknown, not replaced by
+Ark prices. This table does not estimate the full 305-task mean.}
+\label{tab:cost-agent-supplement}
+\end{table*}
+
+All 12 generation requests return usage and the requested version identifier,
+but five reach the cap. Their combined estimated generation cost is CNY
+0.6430; four short availability probes add approximately CNY 0.0005.
+No Judge requests are issued. Latency includes transport and queueing under
+concurrent execution; it is not a pure model-compute measurement.
+The DS Flash pilot uses the ordinary Ark version, whereas the main native
+DS Flash experiment used a third-party channel.
+
+The fixed task identifiers are
+\texttt{hinge-question-designer\_\_01},
+\texttt{spaced-practice-scheduler\_\_03}, and
+\texttt{lesson-builder\_\_cn26\_05}.
+The requested Ark identifiers are \texttt{glm-5-3-flash-260828},
+\texttt{deepseek-v4-1-flash-260910},
+\texttt{deepseek-v4-pro-ga-260813}, and
+\texttt{doubao-seed-2-1-pro-260915}. No access to the latter two models'
+native generation databases is inferred from their direct pilot responses.
+
+\paragraph{Cache and reasoning accounting.}
+For returned API input $I_j$, cached input $K_j$, and completion $O_j$, with
+respective CNY-per-million prices $p_I,p_K,p_O$, we use
+\begin{equation}
+C_j=\frac{(I_j-K_j)p_I+K_jp_K+O_jp_O}{10^6}.
+\end{equation}
+For multiple recorded model calls, $C_{\mathrm{task}}=\sum_j C_j$ before
+averaging tasks. Reasoning is already included in API completion usage.
+No implicit cache hits occur in this pilot. GLM Flash input/cache/output
+rates are 0.80/0.23/2.80; Pro rates are 9.00/0.30/27.00; Doubao rates are
+6.00/1.20/30.00. Ark DS Flash peak rates are 2.00/0.04/8.00; idle rates
+are 1.00/0.02/4.00. This pilot completes during weekday Beijing peak hours
+(09--12 and 14--18), so its DS Flash costs use peak prices
+\citep{arkpricing}. Missing usage and unavailable prices remain unknown.
+
+\paragraph{Retained native execution.}
+For the same three tasks, both locally available native-model databases
+retain complete No/With message usage. We sum unique assistant messages in
+the root and descendant sessions, checking their answer bindings and
+message/step/session token agreement. OpenCode stores uncached input
+separately from cache reads and answer output separately from reasoning;
+we reconstruct API prompt/completion totals without double counting.
+
+GLM Flash's mean recorded input rises from 5,758 to 14,998 tokens and estimated
+cost from CNY 0.01283 to 0.02062 with package access. DS Flash's With mean
+includes an eight-call consultation trace, illustrating how repeated context
+can dominate a trajectory. These small-sample observations are not population
+efficiency estimates or quality-adjusted rankings. The accounting covers each
+retained execution, not discarded earlier runs, unrecorded transport attempts,
+infrastructure costs, or Judge calls. Pro/Doubao generation databases are not
+available locally; their retained Judge traces are not substituted.

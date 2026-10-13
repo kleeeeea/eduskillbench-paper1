@@ -1,0 +1,11 @@
+# Paper collaboration
+
+- Canonical public repository: `https://github.com/kleeeeea/eduskillbench-paper1.git`, branch `main`. Read `README.md` before editing. The original personal repository is an import source/backup, with no automatic synchronization.
+- Before editing, inspect `git status`, run `git fetch origin`, and update a clean local `main` with `git pull --ff-only origin main`. Preserve existing work; if the history has diverged, coordinate a merge. Never force-push or reset away changes.
+- The teacher's Overleaf project is already linked to this repository. Have Overleaf changes pushed through **Integrations → GitHub** before pulling them locally. After a GitHub push, pull through the same integration in Overleaf. Protect the teacher's and other collaborators' edits.
+- Coordinate nonoverlapping file ownership for parallel agents. Use separate branches/worktrees for independent changes; agree on integration before touching shared files. Stage only the files belonging to the requested change.
+- Before committing manuscript changes, inspect the diff, compile with `make pdf` (XeLaTeX) or a documented equivalent if TeX Live is unavailable, and check that the main text remains within 8 pages and figures, tables, and citations render correctly. The initial V4.1 PDF has 8 main-text pages and 20 total pages; its import was compiled with Tectonic. Run `make preview` only after checking the PDF when updating the committed snapshot.
+- Preserve ACL style files, formatting rules, and review anonymization. Do not change scientific numbers, claims, evidence boundaries, or the Qwen pending item-level archive caveat without supporting evidence and an explicit task requiring that change. Compilation is not independent experimental verification.
+- The four PDF figures are pregenerated; their generation sources are not in this repository. Do not invent replacement figure data or claim a regenerated figure has been checked against unavailable sources.
+- Keep credentials, model files, raw answers, runtime artifacts, and experiment logs out of this public repository. Paper editing requires no experiment launch or model/Judge API calls; do not perform those calls as part of a manuscript edit.
+- Preserve `INITIAL_IMPORT.json` as the initial provenance record; later edits need not retain its original hashes.

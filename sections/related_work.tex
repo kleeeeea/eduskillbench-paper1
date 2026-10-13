@@ -1,0 +1,45 @@
+\section{Related Work}
+\label{sec:related}
+
+\paragraph{Educational capability and teaching decisions.}
+Educational evaluation increasingly distinguishes knowing an answer from
+helping a learner. MathTutorBench evaluates open-ended pedagogical abilities,
+and MRBench organizes the assessment of remediation responses
+\citep{mathtutorbench,mrbench}. EduBench extends coverage to diverse teacher-
+and student-facing scenarios \citep{edubench}; EduIllustrate evaluates the
+quality of instructional products across several subjects and dimensions
+\citep{eduillustrate}. On the intervention side, Bridge models expert decisions
+about mistakes and remediation, LearnLM targets pedagogical instruction
+following, and Tutor CoPilot studies expert-inspired assistance in live
+tutoring \citep{bridge,learnlm,tutorcopilot}. \bench{} focuses on a different
+unit of evaluation: a teaching task linked to a reusable procedure and the
+agent execution that produces its instructional artifact. Artifact quality
+does not by itself establish student learning gains.
+
+\paragraph{External Skills and learned procedures.}
+ReAct connects actions to observations, while Voyager retains reusable
+programs in a Skill library \citep{yao2023react,wang2024voyager}. Agent Skills
+provide a document-and-resource interface for procedural guidance
+\citep{agentskills}; SkillsBench tests curated packages through paired task
+executions \citep{skillsbench}. We examine autonomous use of a task-matched
+educational candidate, where a correct package may be available but unread or
+incompletely applied. Parameter learning poses a separate question.
+SkillGym trains from successful Skill-enabled interactions, and SKILL0 studies
+progressive withdrawal of Skill context during reinforcement learning
+\citep{skillgym,skillzero}. Distilling Step-by-Step distinguishes rationale
+from output supervision, and AgentInstruct synthesizes teaching data through
+agentic flows \citep{hsieh2023distilling,mitra2024agentinstruct}. Our small-model
+study uses final teaching artifacts for SFT and outcome-based GRPO
+\citep{deepseekmath}; its learned target differs from supervising tool calls
+or full environment interactions.
+
+\paragraph{Evaluation of open-ended artifacts.}
+LLM judges scale response evaluation but can introduce systematic biases
+\citep{zheng2023judging}. G-Eval and Prometheus use explicit criteria and
+structured scoring, while JudgeBench emphasizes objective error detection
+\citep{geval,prometheus,judgebench}. We adapt QUEST's joint candidate/reference
+comparison \citep{quest} and retain both component scores. Following the
+diagnostic role of breakdowns in EduIllustrate \citep{eduillustrate}, we examine
+agreement separately across educational Skill families and at the component
+and relative-score levels. This establishes where an evaluator agrees with
+reviewers, rather than treating a single aggregate as universal validation.

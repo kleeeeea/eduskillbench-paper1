@@ -1,0 +1,15 @@
+\subsection{Experimental Setup}
+We evaluate GLM-5.3, GLM-5.3 Flash, DeepSeek V4.1 Flash, DeepSeek V4 Pro,
+and Doubao Seed 2.1 Pro on the same 305 tasks in both conditions. All 3,050
+cells have a resolved score or an explicit execution-failure status. The
+native-access analysis covers the latter four systems; the archived GLM-5.3
+row is retained in outcome comparisons, with its exposure provenance recorded
+in Appendix~\ref{app:execution}. Qwen3-4B and its SFT/GRPO adapters form a
+separate learning comparison without external Skills.
+
+The experiments ask three connected questions: how outcomes vary across
+Skills, how observed access relates to the resulting artifact, and whether
+Skill-informed demonstrations support performance without external resources.
+Expert-adjudicated judgments and cost measurements assess the reliability
+and practical requirements of these comparisons. All reported score changes
+are on the 0--100 reference-relative scale of Equation~\ref{eq:refscore}.

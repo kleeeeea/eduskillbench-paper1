@@ -1,0 +1,58 @@
+\section{Introduction}
+
+Educational assistants must turn knowledge into instructional decisions: which
+hint to offer after an unsuccessful attempt, what evidence would demonstrate
+understanding, and how to organize practice within a limited timetable.
+Producing a plausible explanation of a teaching method is easier than adapting
+that method to a learner and delivering materials a teacher can use. This
+distinction is central to pedagogical content knowledge and scaffolding
+\citep{shulman1986,wood1976}, and remains relevant to language models:
+MathTutorBench finds that subject-solving ability does not automatically
+translate into effective tutoring \citep{mathtutorbench}.
+
+Recent work addresses this gap through pedagogical instruction following and
+explicit expert decisions \citep{learnlm,bridge}. Reusable \emph{Agent Skills}
+offer a complementary approach: package a procedure, its templates, and
+supporting resources so that an agent can consult them when needed
+\citep{agentskills}. For example, an adaptive-hint package can connect evidence
+of a student's difficulty to graduated assistance and a check for independent
+understanding. Its educational value depends on whether the agent selects
+applicable operations and completes them correctly. Merely making the document
+available does not establish that connection.
+
+Existing benchmarks provide complementary evidence. EduBench covers diverse
+educational requests, while MathTutorBench and MRBench assess open-ended
+tutoring behavior \citep{edubench,mathtutorbench,mrbench}. SkillsBench evaluates
+procedural packages through paired agent runs and executable verification
+\citep{skillsbench}. Open-ended teaching products introduce a further challenge:
+a generated lesson, diagnostic question, or practice schedule may be fluent
+and procedurally detailed yet infeasible or substantively incorrect. Measuring
+Skill use in this setting requires linking a teaching task to its procedural
+resource, the agent's actions, and the quality of the delivered product.
+
+We introduce \bench{}, a unified benchmark of 305 tasks across 14 educational
+Skill families. Each task binds a teaching situation, a designated Skill, and
+applicable rubric criteria. Paired \noskill{} and \withskill{} evaluations
+compare delivered outcomes with and without procedural support; native execution records
+show whether agents actually load it. Reference-conditioned judgments assess
+the delivered text provided to the evaluator, while a 28-task expert-adjudicated sample checks
+how those judgments behave across the 14 families. A complementary Qwen3-4B
+study examines learning from Skill-informed artifacts through supervised
+fine-tuning (SFT) and subsequent outcome-based reinforcement learning.
+
+The analysis reveals a gap between access and useful delivery. Across four
+native-access models, expected-package loading ranges from 17.70\% to 71.48\%,
+but aggregate With--No changes remain between $-1.19$ and $+0.50$ score points.
+Family breakdowns and paired cases locate more explicit teaching operations,
+resource failures, and incomplete deliverables behind those averages.
+Human-adjudicated scores further show that close reference-relative scores can
+coexist with substantial differences in their underlying quality components.
+These findings motivate evaluating procedural support at both the execution
+and artifact levels.
+
+Our contributions are threefold: (1) a 305-task educational benchmark linking
+14 reusable Skills to explicit output requirements and rubrics; (2) paired
+model evaluations with family-level outcomes, observable Skill access, and
+trace-based explanations; and (3) complementary studies of artifact learning,
+expert-adjudicated evaluation, and execution cost. Together, they make the
+path from procedural guidance to educational work empirically inspectable.

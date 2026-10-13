@@ -1,0 +1,91 @@
+\section{EduSkillBench}
+\label{sec:benchmark}
+\label{sec:framework}
+
+\subsection{Task Definition and Construction}
+Given a teaching situation and request, an agent produces an instructional
+artifact: for example, a lesson plan, diagnostic question, support sequence,
+project brief, or practice schedule. Successful work requires interpreting
+the available evidence, choosing appropriate teaching operations, and
+delivering a correct, feasible product. Each task binds the situation and
+request to a designated Skill and a fixed set of applicable rubric dimensions.
+The Skill supplies reusable procedural support; it is not a reference answer.
+
+The unified inventory contains 305 tasks across 14 Skills. It combines 263
+Chinese teaching scenarios adapted from 30 documents in the archived
+\texttt{edu\_scene\_66} collection with 42 constructed English tasks, three
+per Skill. The source scenarios cover nine families; the constructed tasks
+extend coverage to all 14. Versioned revisions repair identified mismatches
+between questions, contexts, and criteria. Each constructed task specifies
+the requested artifact and constraints at one of three nominal difficulty
+levels. These levels organize construction, rather than constitute a
+calibrated proficiency scale. All 305 tasks receive equal weight in the
+primary result.
+
+The packages are drawn from public educational Skill collections
+\citep{educationagentskills,teachingskills}. They cover planning and alignment,
+diagnostic questioning, adaptive support, learner participation, and practice
+over time. Family sizes range from three to 157 tasks; lesson building
+accounts for 51.48\% of the inventory. Figure~\ref{fig:skill-breakdown} reports
+all family counts, and Appendix~\ref{app:inventory} preserves the full task
+and training distribution.
+
+\paragraph{An example of procedure fit.}
+One task asks how to help a fourth-grade pupil label rock specimens independently
+when labels are crooked or omit names and collection sites. Its adaptive-hint
+Skill connects diagnosis to graduated assistance and an independence check.
+The response must provide usable prompts and checks suited to this obstacle;
+reproducing an entire teaching template is unnecessary. The applicable rubric
+covers accuracy, scaffolding, guidance, age suitability, and safety. This
+task--procedure--criterion binding makes the intended support observable.
+It does not provide an answer key for every new example the agent may invent.
+
+\subsection{Paired Agent Execution}
+\label{sec:protocol}
+The native protocol uses an isolated Docker workspace for each task and
+OpenCode 1.18.11 with an educational single-turn agent instruction.
+\noskill{} exposes no educational package. \withskill{} makes the designated
+task-matched package available through the native Skill interface. The agent
+decides whether to load it, inspect resources, and apply particular operations.
+This measures autonomous use of the available candidate; it does not test
+retrieval across all 14 Skills. Rubrics and evaluation references are withheld
+from generation.
+
+The agent deadline is 600 seconds, with a 480-second provider timeout and a
+10,000-token output cap per model call. Multiple calls may occur within a
+trajectory. Paired runs retain the requested artifact, available tool records,
+and execution status. There is one accepted outcome per model--task--condition,
+and completed answers are reused when only judging needs recovery.
+Exact model settings and the retained GLM-5.3 exposure inventory are documented
+in Appendix~\ref{app:execution}.
+
+\subsection{Reference-Conditioned Artifact Evaluation}
+\label{sec:judge}
+DeepSeek V4.1 Flash jointly evaluates each candidate and the task's saved
+DeepSeek V4 Pro \noskill{} answer. The two texts appear as anonymous A/B
+responses, with hash-assigned order, the task, and its applicable rubric.
+The evaluator sees the retained delivery text; files absent from that input
+are not automatically inspected.
+Following the comparison mechanism of QUEST \citep{quest}, both receive
+dimension scores $s_{x,i,d}\in[0,10]$. We compute
+\begin{align}
+J_{x,i}&=\frac{1}{10D_i}\sum_{d=1}^{D_i}s_{x,i,d},\\
+R_i&=\frac{J_{c,i}}{J_{c,i}+J_{r,i}},\qquad
+S=\frac{100}{305}\sum_{i=1}^{305}R_i,
+\label{eq:refscore}
+\end{align}
+where $D_i$ is the number of applicable dimensions and $c,r$ denote candidate
+and reference. All tasks use this equal-weight rule, regardless of their
+construction origin. $R_i=0.5$ means parity with the reference under that
+judgment, not 50\% accuracy. Pro's reference-self condition receives 0.5;
+execution failures receive zero in the fixed 305-task denominator. A pair
+with both components zero is unresolved; none remain in the reported archive.
+
+The judge checks correctness, consistency, feasibility, and task constraints;
+scores of at least 9 require response evidence. Substantive errors reduce
+relevant dimensions. Structural validators check coverage, evidence bindings,
+and score ranges. The reference is a comparison anchor, not a gold answer:
+generated scientific examples have no independent computational oracle.
+We therefore retain both $J$ components and compare judgments with expert
+adjudication in Section~\ref{sec:human-summary}. A stable ratio can conceal
+shared changes in candidate and reference scores.

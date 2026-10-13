@@ -1,14 +1,73 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
-
-\title{eduskillbench}
-\author{klee }
-\date{October 2026}
-
+\documentclass[11pt]{article}
+\usepackage[review]{acl}
+\usepackage{times}
+\usepackage{latexsym}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{amsmath,amssymb}
+\usepackage{array}
+\usepackage{url}
+\makeatletter
+\let\inputtable\@@input
+\makeatother
+\newcommand{\bench}{\textsc{EduSkillBench}}
+\newcommand{\noskill}{\textsc{No Skill}}
+\newcommand{\withskill}{\textsc{With Skill}}
+\title{EduSkillBench: Evaluating Procedural Skill Use\\in Educational Agents}
+\author{Anonymous submission}
 \begin{document}
-
 \maketitle
+\begin{abstract}
+Reusable Skills can guide educational agents through teaching procedures,
+but their availability does not establish that an agent uses them effectively.
+We present \bench{}, a benchmark of 305 tasks across 14 educational Skill
+families, linking teaching situations, procedural resources, execution
+records, and artifact-level rubrics. Paired model evaluations show small,
+mixed aggregate changes despite expected-package loading rates of
+17.70--71.48\% across four native-access systems. Skill-level breakdowns and
+paired traces expose both useful instructional operations and failures after
+loading, including unavailable resources and incomplete delivery. A
+28-task expert-adjudicated study covers all 14 families and finds that close
+reference-relative scores can conceal larger component-score disagreements.
+We further examine learning from 246 Skill-informed artifacts through
+Qwen3-4B SFT and subsequent outcome-based reinforcement learning, alongside
+an execution-cost pilot. \bench{} provides a connected evaluation of
+procedural availability, observed use, and usable educational output.
+\end{abstract}
 
-\section{Introduction}
+\begin{figure*}[t]
+\centering
+\includegraphics[width=\textwidth]{figures/framework_v4.pdf}
+\caption{Overview of \bench{}. Teaching tasks bind procedural resources to
+artifact requirements and rubric criteria. Paired native execution exposes a
+task-matched Skill for autonomous access; a separate artifact-learning study
+tests performance without Skill documents. Retained outputs support outcome,
+access, and human--judge analyses. Rubrics and evaluation references are used
+after generation. Exposure details are in Appendix~\ref{app:execution}.}
+\label{fig:pipeline}
+\end{figure*}
+\input{sections/introduction.tex}
+\input{sections/related_work.tex}
+\input{sections/benchmark.tex}
+\section{Experimental Results}
+\label{sec:experiments}
+\input{sections/experimental_setup.tex}
+\input{sections/results.tex}
+\input{sections/access.tex}
+\input{sections/internalization.tex}
+\input{sections/human_summary.tex}
+\input{sections/cost_analysis.tex}
+\input{sections/discussion.tex}
 
+\bibliography{references}
+\appendix
+\input{sections/reproducibility.tex}
+\input{sections/inventory_appendix.tex}
+\clearpage
+\input{sections/human_appendix.tex}
+\clearpage
+\input{sections/cost_appendix.tex}
 \end{document}

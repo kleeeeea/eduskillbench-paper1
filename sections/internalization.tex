@@ -1,0 +1,54 @@
+\subsection{Learning to Produce Artifacts Without External Skills}
+\label{sec:internalization}
+
+We further ask whether Skill-informed demonstrations can improve a small
+model when the procedural documents are absent at inference. Inspired by
+SkillGym's distinction between external assistance and parameter transfer
+\citep{skillgym}, we compare Qwen3-4B-Instruct-2507, LoRA-SFT, and subsequent
+outcome-based GRPO on the same 305 tasks under No Skill.
+
+\paragraph{Teach decisions through complete artifacts.}
+We decompose the 14 Skills into operations and evidence that should change
+their application: repeated failed hints, for example, should trigger a
+different response from an initial request for help. EduBench question seeds
+are reconstructed around complete-product creation, changed learner evidence,
+resource boundaries, and artifact repair. Screening and revision retain
+246 demonstrations: 162 generated reference artifacts, 52 revised artifacts,
+and 32 final answers from environment executions. Each student input contains
+the task; the supervised target is its complete teaching artifact. Skill
+documents and rubrics are omitted from student inputs. This supervision
+targets educational decisions expressed in products, rather than native
+tool-call trajectories.
+
+SFT applies completion-only loss for one epoch, preserving all complete
+targets within 8,192 tokens. GRPO starts from that adapter, samples eight
+answers per training question, and runs 123 optimization steps. The training
+judge assigns the equally weighted PASS fraction under the task rubric;
+empty or truncated answers receive zero. This outcome reward differs from
+the final reference-relative evaluation. Full recipes and provenance are
+in Appendix~\ref{app:execution}.
+
+\begin{table}[t]
+\centering\small
+\begin{tabular}{lrrr}
+\toprule
+Stage & No Skill & $\Delta_{\mathrm{Base}}$ & $\Delta_{\mathrm{prev}}$\\
+\midrule
+\inputtable{tables/internalization.tex}
+\bottomrule
+\end{tabular}
+\caption{Reported 305-task No Skill aggregates for Qwen3-4B and its two
+adapters. The latest per-task recovery archive remains to be reconciled
+with this supplied aggregate version (Appendix~\ref{app:execution}).}
+\label{tab:internalization}
+\end{table}
+
+The reported sequence is 41.56$\rightarrow$42.69$\rightarrow$43.04:
+$+1.13$ points after SFT and another $+0.35$ after GRPO. This is a modest
+descriptive improvement, not a demonstrated routing capability or a
+significant effect. Training uses non-identical benchmark-derived variants,
+so the comparison concerns related educational families rather than
+unseen-family generalization. Updated adapter evaluations also recover
+historical execution failures; item-level reconciliation is needed to
+separate recovery and answer-quality contributions before finalizing the
+learning claim.
